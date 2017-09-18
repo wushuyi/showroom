@@ -1,0 +1,48 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; }
+
+.wrapper {
+  width: 100%;
+  height: 100%; }
+
+.scroll {
+  height: 16rem;
+  width: 142.22222rem;
+  background: red; }
+
+.bg {
+  height: 16rem;
+  width: 142.22222rem;
+  background: url("../imgs/bg.png") no-repeat;
+  background-size: 100%;
+  transition: transform 0.1s;
+  position: relative; }
+
+.deng1 {
+  top: 0.03865rem;
+  left: 12.67633rem;
+  width: 2.83285rem;
+  height: 4.79227rem;
+  position: absolute;
+  background: url(../imgs/deng1.png) no-repeat;
+  background-size: cover; }
+
+.deng2 {
+  top: 0.03865rem;
+  left: 69.15169rem;
+  width: 4.14686rem;
+  height: 7.17681rem;
+  position: absolute;
+  background: url(../imgs/deng2.png) no-repeat;
+  background-size: cover; }
+
+.deng3 {
+  top: 0.03865rem;
+  left: 126.58164rem;
+  width: 2.77101rem;
+  height: 4.52174rem;
+  position: absolute;
+  background: url(../imgs/deng3.png) no-repeat;
+  background-size: cover; }
