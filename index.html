@@ -25,50 +25,64 @@
 
     <link rel="shortcut icon" href="favicon.ico"/>
 
+
 </head>
 
 <body>
-<div class="wrapper">
-    <div class="scroll">
-        <div class="bg">
-            <div class="deng1"></div>
-            <div class="deng2"></div>
-            <div class="deng3"></div>
-            <div class="img img1"></div>
-            <div class="img img2"></div>
-            <div class="img img3"></div>
-            <div class="img img4"></div>
-            <div class="img img5"></div>
-            <div class="img img6"></div>
-            <div class="img img7"></div>
-            <div class="img img8"></div>
-            <div class="img img9"></div>
-            <div class="img img10"></div>
-            <div class="img img11"></div>
-            <div class="img img12"></div>
-            <div class="img img13"></div>
-            <div class="img img14"></div>
-        </div>
+<div class="loading">
+    <div class="loader">
+        <div class="progress">0%</div>
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+        </svg>
     </div>
 </div>
-<div class="showbox">
-    <div class="content">
-        <div class="showbg"></div>
-        <div class="showclose button">返回</div>
-        <div class="showimg">
-            <img src="./assets/imgs/img4.png" alt="">
-        </div>
-        <div class="showtext">
-            <div class="testbox">
-                “作者这幅钢笔速写建筑物风景作品
-                ，作者在建筑物细节方面的处理还是非常细致的，尤其是屋檐特别提神；作者用了比较强的对比度来体现了其体积感，视觉冲击力很大。背景的植物虚化的非常到位做到了陪衬的效果。”——我要学平台亓老师
-                “作者这幅钢笔速写建筑物风景作品
-                ，作者在建筑物细节方面的处理还是非常细致的，尤其是屋檐特别提神；作者用了比较强的对比度来体现了其体积感，视觉冲击力很大。背景的植物虚化的非常到位做到了陪衬的效果。”——我要学平台亓老师
+
+<script id="tpl" type="text/template">
+    <div class="wrapper">
+        <div class="scroll">
+            <div class="bg">
+                <div class="deng1"></div>
+                <div class="deng2"></div>
+                <div class="deng3"></div>
+                <div class="img img1"></div>
+                <div class="img img2"></div>
+                <div class="img img3"></div>
+                <div class="img img4"></div>
+                <div class="img img5"></div>
+                <div class="img img6"></div>
+                <div class="img img7"></div>
+                <div class="img img8"></div>
+                <div class="img img9"></div>
+                <div class="img img10"></div>
+                <div class="img img11"></div>
+                <div class="img img12"></div>
+                <div class="img img13"></div>
+                <div class="img img14"></div>
             </div>
         </div>
     </div>
-</div>
-<div id="audio_btn" class="off"></div>
+    <div class="showbox">
+        <div class="content">
+            <div class="showbg"></div>
+            <div class="showclose button">返回</div>
+            <div class="showimg">
+                <img src="./assets/imgs/img4.png" alt="">
+            </div>
+            <div class="showtext">
+                <div class="testbox">
+                    “作者这幅钢笔速写建筑物风景作品
+                    ，作者在建筑物细节方面的处理还是非常细致的，尤其是屋檐特别提神；作者用了比较强的对比度来体现了其体积感，视觉冲击力很大。背景的植物虚化的非常到位做到了陪衬的效果。”——我要学平台亓老师
+                    “作者这幅钢笔速写建筑物风景作品
+                    ，作者在建筑物细节方面的处理还是非常细致的，尤其是屋檐特别提神；作者用了比较强的对比度来体现了其体积感，视觉冲击力很大。背景的植物虚化的非常到位做到了陪衬的效果。”——我要学平台亓老师
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="audio_btn" class="off"></div>
+</script>
+
+<script src="assets/libs/PreloadJS/0.6.0/preloadjs.min.js"></script>
 <script src="assets/libs/howler/2.0.4/howler.js"></script>
 <script src="assets/libs/full-tilt/fulltilt.js"></script>
 <script src="assets/libs/jquery/3.2.1/jquery.js"></script>

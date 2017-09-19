@@ -144,6 +144,7 @@ var helpers = {
     document.addEventListener('touchend', function (event) {
         var now = (new Date()).getTime();
         if (now - lastTouchEnd <= 300) {
+            1;
             event.preventDefault();
         }
         lastTouchEnd = now;
@@ -153,167 +154,197 @@ var helpers = {
     } : false);
 })();
 
+var queue = new createjs.LoadQueue();
+var images = [
+    "./assets/imgs/back-arrows.svg",
+    "./assets/imgs/close.svg",
+    "./assets/imgs/deng2.png",
+    "./assets/imgs/img1.png",
+    "./assets/imgs/img4.png",
+    "./assets/imgs/bg.png",
+    "./assets/imgs/deng1.png",
+    "./assets/imgs/deng3.png",
+    "./assets/imgs/img3.png",
+    "./assets/imgs/normalmusic.svg",
+];
+queue.loadManifest(images);
+queue.on("progress", handleFileLoad, this);
+queue.on("complete", function () {
+    setTimeout(handleComplete, 600);
+}, this);
+queue.load();
+var $progress = $('.progress');
 
-var $el = {}, winH, winW, myScroll, textScroll, pageFontSzie, dbBgMargin, bgMargin = 0, initialBeta, scale;
-var bgScale = 11040 / 1242;
-var TILT_LIMIT = 20;
-
-$el.html = $('html');
-$el.body = $('body');
-$el.win = $(window);
-$el.wrapper = $('.wrapper');
-$el.scroll = $('.scroll');
-$el.bg = $('.bg');
-$el.deng1 = $('.deng1');
-$el.deng2 = $('.deng2');
-$el.deng3 = $('.deng3');
-
-$el.showbox = $('.showbox');
-$el.showclose = $('.showclose');
-$el.text = $el.showbox.find('.showtext');
-$el.img = $el.bg.find('.img');
-$el.audio_btn = $('#audio_btn');
-
-function compute() {
-    pageFontSzie = parseFloat($el.html.prop('style').fontSize);
-    winH = $el.win.height();
-    winW = $el.win.width();
-    if (winH > winW) {
-        $el.html.addClass('vertical');
-    } else {
-        $el.html.removeClass('vertical');
-    }
-    $el.wrapper.css({
-        width: winW,
-        height: winH,
-    });
-
-    dbBgMargin = hotcss.px2rem(TILT_LIMIT * 2) * pageFontSzie;
-    scale = (dbBgMargin + winH) / winH;
-    console.log(dbBgMargin);
-    bgMargin = dbBgMargin / 2;
-    var scrollWidth = winH * bgScale * scale - dbBgMargin;
-    var bgMarginLeft = (scrollWidth - winH * bgScale) / 2;
-    // var res = scrollWidth - (winH * bgScale) / 2
-    $el.scroll.css({
-        width: scrollWidth,
-    });
-    // //
-    $el.bg.css({
-        marginLeft: bgMarginLeft,
-    });
-
-    // $el.bg.css({
-    //     transform: ''
-    // });
-
-    if (!myScroll) {
-        myScroll = new IScroll($el.wrapper.get(0), {
-            scrollX: true,
-            scrollY: false,
-            bounce: false,
-            HWCompositing: false,
-            // momentum: false,
-        });
-        textScroll = new IScroll($el.text.get(0), {
-            scrollX: false,
-            scrollY: true,
-            bounce: false,
-            HWCompositing: false,
-            // momentum: false,
-        });
-    } else {
-        myScroll.refresh();
-        textScroll.refresh();
-    }
-    initialBeta = undefined;
+function handleFileLoad(e) {
+    $progress.text(parseInt(e.loaded * 100) + '%');
 }
 
-$el.img.on('click', function (evt) {
-    $el.showbox.show();
-    textScroll.refresh();
-});
-$el.showclose.on('click', function (evt) {
-    $el.showbox.hide();
-});
+function handleComplete(e) {
+    $('.loading').hide();
+    $('body').append($('#tpl').html());
+    var $el = {}, winH, winW,
+        myScroll, textScroll,
+        pageFontSzie, dbBgMargin, bgMargin = 0, initialBeta, scale;
+    var bgScale = 11040 / 1242;
+    var TILT_LIMIT = 20;
 
+    $el.html = $('html');
+    $el.body = $('body');
+    $el.win = $(window);
+    $el.wrapper = $('.wrapper');
+    $el.scroll = $('.scroll');
+    $el.bg = $('.bg');
+    $el.deng1 = $('.deng1');
+    $el.deng2 = $('.deng2');
+    $el.deng3 = $('.deng3');
 
-$.fn.ready(compute);
-$el.win.on('resize', function () {
-    compute();
-    setTimeout(compute, 300);
-});
+    $el.showbox = $('.showbox');
+    $el.showclose = $('.showclose');
+    $el.text = $el.showbox.find('.showtext');
+    $el.img = $el.bg.find('.img');
+    $el.audio_btn = $('#audio_btn');
 
-var swiftclick = SwiftClick.attach(document.body);
-
-
-var cssPropNamePrefixes = ['O', 'MS', 'Moz', 'Webkit'];
-
-var deviceOrientation = FULLTILT.getDeviceOrientation({'type': 'world'});
-deviceOrientation.then(function (orientationData) {
-
-    orientationData.listen(function () {
-
-        var box = {
-            minBoundX: -bgMargin,
-            minBoundY: -bgMargin,
-            maxBoundX: bgMargin,
-            maxBoundY: bgMargin,
-        };
-
-
-        // Display calculated screen-adjusted deviceorientation
-
-        var euler = orientationData.getScreenAdjustedEuler();
-
-        if (euler.beta > 85 && euler.beta < 95) {
-            return;
+    function compute() {
+        pageFontSzie = parseFloat($el.html.prop('style').fontSize);
+        winH = $el.win.height();
+        winW = $el.win.width();
+        if (winH > winW) {
+            $el.html.addClass('vertical');
+        } else {
+            $el.html.removeClass('vertical');
         }
-        if (!initialBeta) {
-            initialBeta = euler.beta;
-        }
-        var tiltX = euler.gamma;
-        var tiltY = euler.beta - initialBeta;
+        $el.wrapper.css({
+            width: winW,
+            height: winH,
+        });
 
-        tiltX = helpers.clamp(tiltX, -TILT_LIMIT, TILT_LIMIT);
-        tiltY = helpers.clamp(tiltY, -TILT_LIMIT, TILT_LIMIT);
-
-        var pxOffsetX = (tiltX * winW / 10) / TILT_LIMIT;
-        var pxOffsetY = (tiltY * winW / 10) / TILT_LIMIT;
-
-        var pxToMoveX = Math.max(box.minBoundX, Math.min(pxOffsetX, box.maxBoundX));
-        var pxToMoveY = Math.max(box.minBoundY, Math.min(pxOffsetY, box.maxBoundY));
+        dbBgMargin = hotcss.px2rem(TILT_LIMIT * 2) * pageFontSzie;
+        scale = (dbBgMargin + winH) / winH;
+        console.log(dbBgMargin);
+        bgMargin = dbBgMargin / 2;
+        var scrollWidth = winH * bgScale * scale - dbBgMargin;
+        var bgMarginLeft = (scrollWidth - winH * bgScale) / 2;
+        // var res = scrollWidth - (winH * bgScale) / 2
+        $el.scroll.css({
+            width: scrollWidth,
+        });
+        // //
         $el.bg.css({
-            transform: 'translate(' + pxToMoveX + 'px, ' + pxToMoveY + 'px) scale(' + scale + ')'
+            marginLeft: bgMarginLeft,
         });
-        $el.deng1.css({
-            transform: 'translate(' + pxToMoveX * -0.5 + 'px, ' + pxToMoveY * -0.2 + 'px)'
-        });
-        $el.deng2.css({
-            transform: 'translate(' + pxToMoveX * -0.5 + 'px, ' + pxToMoveY * -0.2 + 'px)'
-        });
-        $el.deng3.css({
-            transform: 'translate(' + pxToMoveX * -0.5 + 'px, ' + pxToMoveY * -0.2 + 'px)'
-        });
+
+        // $el.bg.css({
+        //     transform: ''
+        // });
+
+        if (!myScroll) {
+            myScroll = new IScroll($el.wrapper.get(0), {
+                scrollX: true,
+                scrollY: false,
+                bounce: false,
+                HWCompositing: false,
+                // momentum: false,
+            });
+            textScroll = new IScroll($el.text.get(0), {
+                scrollX: false,
+                scrollY: true,
+                bounce: false,
+                HWCompositing: false,
+                // momentum: false,
+            });
+        } else {
+            myScroll.refresh();
+            textScroll.refresh();
+        }
+        initialBeta = undefined;
+    }
+
+    $el.img.on('click', function (evt) {
+        $el.showbox.show();
+        textScroll.refresh();
+    });
+    $el.showclose.on('click', function (evt) {
+        $el.showbox.hide();
     });
 
-});
+
+    $.fn.ready(compute);
+    $el.win.on('resize', function () {
+        compute();
+        setTimeout(compute, 300);
+    });
+
+    var swiftclick = SwiftClick.attach(document.body);
+
+
+    var cssPropNamePrefixes = ['O', 'MS', 'Moz', 'Webkit'];
+
+    var deviceOrientation = FULLTILT.getDeviceOrientation({'type': 'world'});
+    deviceOrientation.then(function (orientationData) {
+
+        orientationData.listen(function () {
+
+            var box = {
+                minBoundX: -bgMargin,
+                minBoundY: -bgMargin,
+                maxBoundX: bgMargin,
+                maxBoundY: bgMargin,
+            };
+
+
+            // Display calculated screen-adjusted deviceorientation
+
+            var euler = orientationData.getScreenAdjustedEuler();
+
+            if (euler.beta > 85 && euler.beta < 95) {
+                return;
+            }
+            if (!initialBeta) {
+                initialBeta = euler.beta;
+            }
+            var tiltX = euler.gamma;
+            var tiltY = euler.beta - initialBeta;
+
+            tiltX = helpers.clamp(tiltX, -TILT_LIMIT, TILT_LIMIT);
+            tiltY = helpers.clamp(tiltY, -TILT_LIMIT, TILT_LIMIT);
+
+            var pxOffsetX = (tiltX * winW / 10) / TILT_LIMIT;
+            var pxOffsetY = (tiltY * winW / 10) / TILT_LIMIT;
+
+            var pxToMoveX = Math.max(box.minBoundX, Math.min(pxOffsetX, box.maxBoundX));
+            var pxToMoveY = Math.max(box.minBoundY, Math.min(pxOffsetY, box.maxBoundY));
+            $el.bg.css({
+                transform: 'translate(' + pxToMoveX + 'px, ' + pxToMoveY + 'px) scale(' + scale + ')'
+            });
+            $el.deng1.css({
+                transform: 'translate(' + pxToMoveX * -0.5 + 'px, ' + pxToMoveY * -0.2 + 'px)'
+            });
+            $el.deng2.css({
+                transform: 'translate(' + pxToMoveX * -0.5 + 'px, ' + pxToMoveY * -0.2 + 'px)'
+            });
+            $el.deng3.css({
+                transform: 'translate(' + pxToMoveX * -0.5 + 'px, ' + pxToMoveY * -0.2 + 'px)'
+            });
+        });
+
+    });
 
 //sound
-var sound = new Howl({
-    src: ['./assets/sound/bg.mp3'],
-    loop: true,
-    volume: 0.5,
-    // preload: true,
-});
-// sound.play();
-sound.on('play', function () {
-    $el.audio_btn.addClass('rotate');
-});
-sound.on('pause', function () {
-    $el.audio_btn.removeClass('rotate');
-});
-$el.audio_btn.on('click', function () {
-    var playing = sound.playing();
-    playing ? sound.pause() : sound.play();
-});
+    var sound = new Howl({
+        src: ['./assets/sound/bg.mp3'],
+        loop: true,
+        volume: 0.5,
+        perload: true,
+    });
+    sound.play();
+    sound.on('play', function () {
+        $el.audio_btn.addClass('rotate');
+    });
+    sound.on('pause', function () {
+        $el.audio_btn.removeClass('rotate');
+    });
+    $el.audio_btn.on('click', function () {
+        var playing = sound.playing();
+        playing ? sound.pause() : sound.play();
+    });
+}
