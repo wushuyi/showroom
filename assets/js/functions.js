@@ -220,7 +220,6 @@ function handleComplete(e) {
 
         dbBgMargin = hotcss.px2rem(TILT_LIMIT * 2) * pageFontSzie;
         scale = (dbBgMargin + winH) / winH;
-        console.log(dbBgMargin);
         bgMargin = dbBgMargin / 2;
         var scrollWidth = winH * bgScale * scale - dbBgMargin;
         var bgMarginLeft = (scrollWidth - winH * bgScale) / 2;
@@ -245,33 +244,91 @@ function handleComplete(e) {
                 HWCompositing: false,
                 // momentum: false,
             });
-            textScroll = new IScroll($el.text.get(0), {
-                scrollX: false,
-                scrollY: true,
-                bounce: false,
-                HWCompositing: false,
-                // momentum: false,
-            });
+            // textScroll = new IScroll($el.text.get(0), {
+            //     scrollX: false,
+            //     scrollY: true,
+            //     bounce: false,
+            //     HWCompositing: false,
+            //     // momentum: false,
+            // });
         } else {
             myScroll.refresh();
-            textScroll.refresh();
+            // textScroll.refresh();
         }
         initialBeta = undefined;
     }
 
     $el.img.on('click', function (evt) {
-        $el.showbox.show();
-        textScroll.refresh();
+        // $el.showbox.show();
+        // textScroll.refresh();
+        var $this = $(this);
+        var index = $el.img.index($this);
+
+
+// build items array
+        var items = [
+            {
+                src: './assets/imgs/img1.png',
+                w: 1632,
+                h: 1244,
+                title: '阿王',
+                time: '298天',
+                text: '　　“作者这幅钢笔速写建筑物风景作品 ，作者在建筑物细节方面的处理还是非常细致的，尤其是屋檐特别提神；作者用了比较强的对比度来体现了其体积感，视觉冲击力很大。背景的植物虚化的非常到位做到了陪衬的效果。”——我要学平台亓老师',
+            },
+            {
+                src: './assets/imgs/img3.png',
+                w: 600 * 2,
+                h: 900 * 2,
+                title: '腹有诗书气自华',
+                time: '393天',
+                text: '　　“同学你好，这张工笔作品画的感觉还是非常不错的，整个作品的线条流畅自然有力道，叶子与花瓣的晕染都非常自然，最后花蕾的点缀都表现的非常到位，是一张非常棒的作品。”——我要学平台谷老师',
+            },
+            {
+                src: './assets/imgs/img4.png',
+                w: 1714,
+                h: 3264,
+                title: '海洋',
+                time: '41天',
+                text: '　　“同学，你好，这三幅画着重体现了你对于光影的把控，在画面层次尤其是灰度和高光的理解上有了自己的见解，所以整体的画面感是非常不错的，希望有时间和大家分享你的技法和心得。”——我要学平台韩老师',
+            }
+        ];
+
+// define options (if needed)
+        var options = {
+            // optionName: 'option value'
+            // for example:
+            index: index,
+            shareEl: false,
+            arrowKeys: false,
+            arrowEl: false,
+            zoomEl: false,
+            loop: true,
+            pinchToClose: true,
+            addCaptionHTMLFn: function (item, captionEl, isFake) {
+                // if (!item.author) {
+                //     captionEl.children[0].innerText = '';
+                //     return false;
+                // }
+                captionEl.children[0].innerHTML = '作品出自：' + item.title + ' <br/> 我要学学龄: ' + item.time + ' <br/> 老师点评: <br/> ' + item.text;
+                return true;
+            },
+        };
+
+// Initializes and opens PhotoSwipe
+        var gallery = new PhotoSwipe($('.pswp').get(0), PhotoSwipeUI_Default, items, options);
+        gallery.init();
+        window.gallery = gallery;
     });
-    $el.showclose.on('click', function (evt) {
-        $el.showbox.hide();
-    });
+    // $el.showclose.on('click', function (evt) {
+    //     $el.showbox.hide();
+    // });
 
 
     $.fn.ready(compute);
     $el.win.on('resize', function () {
         compute();
         setTimeout(compute, 300);
+        gallery.close();
     });
 
     var swiftclick = SwiftClick.attach(document.body);
@@ -347,4 +404,6 @@ function handleComplete(e) {
         var playing = sound.playing();
         playing ? sound.pause() : sound.play();
     });
+
+
 }

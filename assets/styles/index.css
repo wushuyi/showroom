@@ -162,7 +162,7 @@ body {
 .showbg {
   width: 82vw;
   height: 16rem;
-  background: #AAAAAA;
+  background: #E0E1E1;
   position: absolute;
   top: 0;
   left: -2vw;
@@ -335,3 +335,78 @@ body {
   80%,
   90% {
     color: #ffa700; } }
+
+.pswp__top-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 1.70048rem;
+  width: 100%; }
+
+.pswp__counter {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 1.70048rem;
+  font-size: 0.50242rem;
+  line-height: 1.70048rem;
+  color: #FFF;
+  opacity: 0.75;
+  padding: 0 0.38647rem; }
+
+.pswp__button, .pswp__button--arrow--left:before, .pswp__button--arrow--right:before {
+  background-size: 10.2029rem 3.40097rem;
+  width: 1.70048rem;
+  height: 1.70048rem; }
+
+.pswp__button--close {
+  background-position: 0 -1.70048rem; }
+
+.pswp__caption {
+  min-height: 1.70048rem; }
+
+.pswp__caption__center {
+  text-align: left;
+  max-width: 16.23188rem;
+  margin: 0 auto;
+  font-size: 0.54106rem;
+  padding: 0.38647rem;
+  line-height: 0.77295rem;
+  color: #CCC; }
+
+.pswp__caption small {
+  font-size: 0.46377rem;
+  color: #BBB; }
+
+.vertical .pswp__top-bar {
+  height: 0.85024rem; }
+
+.vertical .pswp__counter {
+  height: 0.85024rem;
+  font-size: 0.25121rem;
+  line-height: 0.85024rem;
+  padding: 0 0.19324rem; }
+
+.vertical .pswp__button, .vertical .pswp__button--arrow--left:before, .vertical .pswp__button--arrow--right:before {
+  background-size: 6.80193rem 2.26731rem;
+  width: 1.13366rem;
+  height: 1.13366rem; }
+
+.vertical .pswp__button--close {
+  background-position: 0 -1.13366rem; }
+
+.vertical .pswp__caption {
+  min-height: 0.85024rem; }
+
+.vertical .pswp__caption__center {
+  text-align: left;
+  max-width: 8.11594rem;
+  margin: 0 auto;
+  font-size: 0.38647rem;
+  padding: 0.19324rem;
+  line-height: 0.54106rem;
+  color: #CCC; }
+
+.vertical .pswp__caption small {
+  font-size: 0.23188rem;
+  color: #BBB; }

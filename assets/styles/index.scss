@@ -201,7 +201,7 @@ body {
 .showbg {
   width: 82vw;
   height: px2rem(414);
-  background: #AAAAAA;
+  background: #E0E1E1;
   position: absolute;
   top: 0;
   left: -2vw;
@@ -427,5 +427,99 @@ $width: px2rem(100);
   80%,
   90% {
     color: $yellow;
+  }
+}
+
+.pswp__top-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: px2rem(44);
+  width: 100%;
+}
+
+.pswp__counter {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: px2rem(44);
+  font-size: px2rem(13);
+  line-height: px2rem(44);
+  color: #FFF;
+  opacity: 0.75;
+  padding: 0 px2rem(10);
+}
+
+.pswp__button, .pswp__button--arrow--left:before, .pswp__button--arrow--right:before {
+  background-size: px2rem(264) px2rem(88);
+  width: px2rem(44);
+  height: px2rem(44);
+}
+
+.pswp__button--close {
+  background-position: 0 px2rem(-44);
+}
+
+.pswp__caption {
+  min-height: px2rem(44);
+}
+
+.pswp__caption__center {
+  text-align: left;
+  max-width: px2rem(420);
+  margin: 0 auto;
+  font-size: px2rem(14);
+  padding: px2rem(10);
+  line-height: px2rem(20);
+  color: #CCC;
+}
+
+.pswp__caption small {
+  font-size: px2rem(12);
+  color: #BBB;
+}
+
+.vertical {
+  .pswp__top-bar {
+
+    height: px2rem(44 / 2);
+
+  }
+
+  .pswp__counter {
+
+    height: px2rem(44 / 2);
+    font-size: px2rem(13 / 2);
+    line-height: px2rem(44 / 2);
+
+    padding: 0 px2rem(10 / 2);
+  }
+
+  .pswp__button, .pswp__button--arrow--left:before, .pswp__button--arrow--right:before {
+    background-size: px2rem(264 /1.5) px2rem(88 /1.5);
+    width: px2rem(44 /1.5);
+    height: px2rem(44 /1.5);
+  }
+
+  .pswp__button--close {
+    background-position: 0 px2rem(-44 /1.5);
+  }
+
+  .pswp__caption {
+    min-height: px2rem(44 / 2);
+  }
+
+  .pswp__caption__center {
+    text-align: left;
+    max-width: px2rem(420/ 2);
+    margin: 0 auto;
+    font-size: px2rem(10);
+    padding: px2rem(10/ 2);
+    line-height: px2rem(14);
+    color: #CCC;
+  }
+  .pswp__caption small {
+    font-size: px2rem(12/ 2);
+    color: #BBB;
   }
 }
