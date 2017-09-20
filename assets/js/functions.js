@@ -39,13 +39,13 @@ var helpers = {
     },
 
     transformSupport: function (value) {
-        let element = document.createElement('div'),
+        var element = document.createElement('div'),
             propertySupport = false,
             propertyValue = null,
             featureSupport = false,
             cssProperty = null,
             jsProperty = null;
-        for (let i = 0, l = helpers.vendors.length; i < l; i++) {
+        for (var i = 0, l = helpers.vendors.length; i < l; i++) {
             if (helpers.vendors[i] !== null) {
                 cssProperty = helpers.vendors[i][0] + 'transform';
                 jsProperty = helpers.vendors[i][1] + 'Transform';
@@ -64,7 +64,7 @@ var helpers = {
                 break;
             case '3D':
                 if (propertySupport) {
-                    let body = document.body || document.createElement('body'),
+                    var body = document.body || document.createElement('body'),
                         documentElement = document.documentElement,
                         documentOverflow = documentElement.style.overflow,
                         isCreatedBody = false;
@@ -95,9 +95,9 @@ var helpers = {
     },
 
     css: function (element, property, value) {
-        let jsProperty = helpers.propertyCache[property];
+        var jsProperty = helpers.propertyCache[property];
         if (!jsProperty) {
-            for (let i = 0, l = helpers.vendors.length; i < l; i++) {
+            for (var i = 0, l = helpers.vendors.length; i < l; i++) {
                 if (helpers.vendors[i] !== null) {
                     jsProperty = helpers.camelCase(helpers.vendors[i][1] + '-' + property);
                 } else {
@@ -133,13 +133,13 @@ var helpers = {
     }, supportsPassiveOption ? {
         passive: false,
         capture: true
-    } : true);
+    } : false);
     document.addEventListener('touchmove', function (event) {
         event.preventDefault();
     }, supportsPassiveOption ? {
         passive: false,
         capture: true
-    } : true);
+    } : false);
     var lastTouchEnd = 0;
     document.addEventListener('touchend', function (event) {
         var now = (new Date()).getTime();
@@ -340,7 +340,8 @@ function handleComplete(e) {
             var pxToMoveX = Math.max(box.minBoundX, Math.min(pxOffsetX, box.maxBoundX));
             var pxToMoveY = Math.max(box.minBoundY, Math.min(pxOffsetY, box.maxBoundY));
             $el.bg.css({
-                transform: 'translate(' + pxToMoveX + 'px, ' + pxToMoveY + 'px) scale(' + scale + ')'
+                transform: 'translate(' + pxToMoveX + 'px, ' + pxToMoveY + 'px) scale3d(' + scale + ', ' + scale + ', 1)'
+                // transform: 'translate(' + pxToMoveX + 'px, ' + pxToMoveY + 'px) scale(' + scale + ')'
             });
             $el.deng1.css({
                 transform: 'translate(' + pxToMoveX * -0.5 + 'px, ' + pxToMoveY * -0.2 + 'px)'
@@ -376,3 +377,7 @@ function handleComplete(e) {
 
 
 }
+
+// setInterval(function () {
+//     $(window).trigger('resize');
+// }, 1000);

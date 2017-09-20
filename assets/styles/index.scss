@@ -1,8 +1,11 @@
 @import "../libs/hotcss/px2rem";
 
 body {
-  width: 100vw;
-  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   overflow: hidden;
 }
 
@@ -479,7 +482,7 @@ $width: px2rem(100);
   color: #BBB;
 }
 
-.pswp__top-bar{
+.pswp__top-bar {
   background-color: transparent;
 }
 

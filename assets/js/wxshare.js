@@ -77,8 +77,8 @@ var wxshare = (function () {
         if (!wx) {
             return false;
         }
-        let initData = opts.initData;
-        let setData = opts.setData;
+        var initData = opts.initData;
+        var setData = opts.setData;
 
         wx.config({
             appId: initData.appid,
@@ -88,7 +88,7 @@ var wxshare = (function () {
             jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline', 'onMenuShareQQ', 'onMenuShareWeibo', 'onMenuShareQZone']
         });
 
-        let shareTitle = setData.title || shareMsg.common.title,
+        var shareTitle = setData.title || shareMsg.common.title,
             descContent = setData.descContent || shareMsg.common.descContent,
             lineLink = window.location.href,
             imgUrl = setData.imgUrl || shareMsg.common.imgUrl;

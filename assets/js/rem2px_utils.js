@@ -60,15 +60,15 @@ window.Design = (function () {
   }
 
   function rem_px(str) {
-    let fontSzie = parseFloat(document.documentElement.style.fontSize.split('px')[0]);
+    var fontSzie = parseFloat(document.documentElement.style.fontSize.split('px')[0]);
     return str.replace(/(-?\d+(?:.\d+))rem/g, function (match, p1, offset, str) {
       return `${Math.round(p1 * fontSzie)}px`;
     });
   }
 
   function str2obj(str) {
-    let res = str.split(';');
-    let obj = {};
+    var res = str.split(';');
+    var obj = {};
     res = res.forEach(function (item, index) {
       item = $.trim(item);
       item = item.split(':');
@@ -85,7 +85,7 @@ window.Design = (function () {
   }
 
   function appendCss(className, str) {
-    let style = document.createElement('style');
+    var style = document.createElement('style');
     style.textContent = ` ${className}{
       ${str}
     }`;
