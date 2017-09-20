@@ -378,6 +378,9 @@ body {
   font-size: 0.46377rem;
   color: #BBB; }
 
+.pswp__top-bar {
+  background-color: transparent; }
+
 .vertical .pswp__top-bar {
   height: 0.85024rem; }
 
