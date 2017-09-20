@@ -177,7 +177,7 @@ function handleComplete(e) {
     $('.loading').hide();
     $('body').append($('#tpl').html());
     var $el = {}, winH, winW,
-        myScroll, textScroll,
+        myScroll, gallery,
         pageFontSzie, dbBgMargin, bgMargin = 0, initialBeta, scale;
     var bgScale = 11040 / 1242;
     var TILT_LIMIT = 20;
@@ -279,15 +279,14 @@ function handleComplete(e) {
                 if (item.text) {
                     text = text + ' <br/> 老师点评: <br/> ' + item.text;
                 }
-                captionEl.children[0].innerHTML =text;
+                captionEl.children[0].innerHTML = text;
                 return true;
             },
         };
 
 // Initializes and opens PhotoSwipe
-        var gallery = new PhotoSwipe($('.pswp').get(0), PhotoSwipeUI_Default, dataItems, options);
+        gallery = new PhotoSwipe($('.pswp').get(0), PhotoSwipeUI_Default, dataItems, options);
         gallery.init();
-        window.gallery = gallery;
     });
     // $el.showclose.on('click', function (evt) {
     //     $el.showbox.hide();
@@ -298,7 +297,7 @@ function handleComplete(e) {
     $el.win.on('resize', function () {
         compute();
         setTimeout(compute, 300);
-        gallery.close();
+        gallery && gallery.close();
     });
 
     var swiftclick = SwiftClick.attach(document.body);
