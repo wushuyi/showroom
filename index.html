@@ -10,7 +10,7 @@
 
     <meta name="author" content="shuyi.wu"/>
 
-    <meta name="description" content=""/>
+    <meta name="description" content="这个美术馆，有一股神秘力量在让我慢慢改变……"/>
 
     <meta name="Copyright" content="wushuyi"/>
 
@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="assets/libs/picnic/6.4.0/picnic.css">
 
 
-    <link rel="shortcut icon" href="favicon.ico"/>
+    <link rel="shortcut icon" href="assets/imgs/favicon.png"/>
     <link rel="stylesheet" href="assets/libs/photoswipe/photoswipe.css">
     <link rel="stylesheet" href="assets/libs/photoswipe/default-skin/default-skin.css">
 
@@ -31,6 +31,9 @@
 </head>
 
 <body>
+<div style='margin:0 auto;width:0px;height:0px;overflow:hidden;'>
+    <img id="shareimg" src="http://m.5151study.com/showroom/assets/images/favicon.png" width='700'>
+</div>
 <div class="loading">
     <div class="loader">
         <div class="progress">0%</div>
@@ -149,10 +152,47 @@
     <!--</div>-->
     <div id="audio_btn" class="off"></div>
 </script>
+<script src="assets/libs/jquery/3.2.1/jquery.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="assets/js/wxshare.js"></script>
+<script>
+    // 设置微信分享
+    var isWeiXin = (function () {
+        var ua = window.navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+            return true;
+        } else {
+            return false;
+        }
+    })();
+
+    if (isWeiXin) {
+        var getQueryConfig = {
+            'version': "1.0.0",
+            "platform": "H5"
+        };
+
+        function getWeiXinShareUrl(url) {
+            return 'http://api.5151study.com/weixin/signature?url=' + url;
+        }
+
+        var reqUrl = getWeiXinShareUrl(location.href);
+
+        $.get(reqUrl, getQueryConfig, function (data) {
+            wxshare.init({
+                initData: data.data,
+                setData: {
+                    title: '这个美术馆，有一股神秘力量在让我慢慢改变……',
+                    descContent: '这个美术馆，有一股神秘力量在让我慢慢改变……',
+                    imgUrl: 'http://m.5151study.com/showroom/assets/images/favicon.png',
+                }
+            });
+        });
+    }
+</script>
 <script src="assets/libs/PreloadJS/0.6.0/preloadjs.min.js"></script>
 <script src="assets/libs/howler/2.0.4/howler.js"></script>
 <script src="assets/libs/full-tilt/fulltilt.js"></script>
-<script src="assets/libs/jquery/3.2.1/jquery.js"></script>
 <script src="assets/libs/iScroll/5.2.0/iscroll-lite.js"></script>
 <script src="assets/libs/swiftclick/2.1.1/swiftclick.js"></script>
 <!--<script src="assets/js/rem2px_utils.js"></script>-->
