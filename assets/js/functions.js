@@ -48,36 +48,44 @@ var helpers = {
 })();
 
 
-var queue = new createjs.LoadQueue();
+// var queue = new createjs.LoadQueue(false);
 var images = [
     "./assets/imgs/deng1.png",
     "./assets/imgs/deng2.png",
     "./assets/imgs/deng3.png",
     "./assets/imgs/bg.png",
+    "./assets/imgs/normalmusic.svg",
 ];
-queue.loadManifest(images);
-queue.on("progress", handleFileLoad, this);
-queue.on("complete", function () {
-    setTimeout(handleComplete, 600);
-}, this);
-queue.load();
+// queue.loadManifest(images);
+// queue.on("progress", handleFileLoad, this);
+// queue.on("complete", function () {
+//     setTimeout(handleComplete, 600);
+// }, this);
+// queue.load();
+var loader = new PxLoader();
+$.each(images, function (index, item) {
+    loader.addImage(item);
+});
 var $progress = $('.progress');
 
-function handleFileLoad(e) {
-    $progress.text(parseInt(e.loaded * 100) + '%');
-}
+loader.addProgressListener(function (e) {
+    var num = parseInt(e.completedCount / e.totalCount * 100) + '%';
+    $progress.text(num);
+});
+
+loader.addCompletionListener(handleComplete);
+loader.start();
 
 function handleComplete(e) {
     $('.loading').hide();
-    $('body').append($('#tpl').html());
+
     var $el = {}, winH, winW,
         myScroll, gallery,
         pageFontSzie, dbBgMargin, bgMargin = 0, initialBeta, scale;
-    var bgScale = 11040 / 1242;
-    var TILT_LIMIT = 20;
+    $el.body = $('body');
+    $el.body.append($('#tpl').html());
 
     $el.html = $('html');
-    $el.body = $('body');
     $el.win = $(window);
     $el.wrapper = $('.wrapper');
     $el.scroll = $('.scroll');
@@ -85,6 +93,11 @@ function handleComplete(e) {
     $el.deng1 = $('.deng1');
     $el.deng2 = $('.deng2');
     $el.deng3 = $('.deng3');
+
+
+    var bgScale = 11040 / 1242;
+    var TILT_LIMIT = 20;
+
 
     $el.showbox = $('.showbox');
     $el.showclose = $('.showclose');
