@@ -1,116 +1,9 @@
 var helpers = {
-    propertyCache: {},
-    vendors: [null, ['-webkit-', 'webkit'], ['-moz-', 'Moz'], ['-o-', 'O'], ['-ms-', 'ms']],
-
     clamp: function (value, min, max) {
         return min < max
             ? (value < min ? min : value > max ? max : value)
             : (value < max ? max : value > min ? min : value);
     },
-
-    data: function (element, name) {
-        return helpers.deserialize(element.getAttribute('data-' + name));
-    },
-
-    deserialize: function (value) {
-        if (value === 'true') {
-            return true;
-        } else if (value === 'false') {
-            return false;
-        } else if (value === 'null') {
-            return null;
-        } else if (!isNaN(parseFloat(value)) && isFinite(value)) {
-            return parseFloat(value);
-        } else {
-            return value;
-        }
-    },
-
-    camelCase: function (value) {
-        return value.replace(/-+(.)?/g, (match, character) => {
-            return character ? character.toUpperCase() : '';
-        });
-    },
-
-    accelerate: function (element) {
-        helpers.css(element, 'transform', 'translate3d(0,0,0) rotate(0.0001deg)');
-        helpers.css(element, 'transform-style', 'preserve-3d');
-        helpers.css(element, 'backface-visibility', 'hidden');
-    },
-
-    transformSupport: function (value) {
-        var element = document.createElement('div'),
-            propertySupport = false,
-            propertyValue = null,
-            featureSupport = false,
-            cssProperty = null,
-            jsProperty = null;
-        for (var i = 0, l = helpers.vendors.length; i < l; i++) {
-            if (helpers.vendors[i] !== null) {
-                cssProperty = helpers.vendors[i][0] + 'transform';
-                jsProperty = helpers.vendors[i][1] + 'Transform';
-            } else {
-                cssProperty = 'transform';
-                jsProperty = 'transform';
-            }
-            if (element.style[jsProperty] !== undefined) {
-                propertySupport = true;
-                break;
-            }
-        }
-        switch (value) {
-            case '2D':
-                featureSupport = propertySupport;
-                break;
-            case '3D':
-                if (propertySupport) {
-                    var body = document.body || document.createElement('body'),
-                        documentElement = document.documentElement,
-                        documentOverflow = documentElement.style.overflow,
-                        isCreatedBody = false;
-
-                    if (!document.body) {
-                        isCreatedBody = true;
-                        documentElement.style.overflow = 'hidden';
-                        documentElement.appendChild(body);
-                        body.style.overflow = 'hidden';
-                        body.style.background = '';
-                    }
-
-                    body.appendChild(element);
-                    element.style[jsProperty] = 'translate3d(1px,1px,1px)';
-                    propertyValue = window.getComputedStyle(element).getPropertyValue(cssProperty);
-                    featureSupport = propertyValue !== undefined && propertyValue.length > 0 && propertyValue !== 'none';
-                    documentElement.style.overflow = documentOverflow;
-                    body.removeChild(element);
-
-                    if (isCreatedBody) {
-                        body.removeAttribute('style');
-                        body.parentNode.removeChild(body);
-                    }
-                }
-                break;
-        }
-        return featureSupport;
-    },
-
-    css: function (element, property, value) {
-        var jsProperty = helpers.propertyCache[property];
-        if (!jsProperty) {
-            for (var i = 0, l = helpers.vendors.length; i < l; i++) {
-                if (helpers.vendors[i] !== null) {
-                    jsProperty = helpers.camelCase(helpers.vendors[i][1] + '-' + property);
-                } else {
-                    jsProperty = property;
-                }
-                if (element.style[jsProperty] !== undefined) {
-                    helpers.propertyCache[property] = jsProperty;
-                    break;
-                }
-            }
-        }
-        element.style[jsProperty] = value;
-    }
 };
 
 // ios 10 禁止缩放
@@ -153,6 +46,7 @@ var helpers = {
         capture: false
     } : false);
 })();
+
 
 var queue = new createjs.LoadQueue();
 var images = [
@@ -377,7 +271,3 @@ function handleComplete(e) {
 
 
 }
-
-// setInterval(function () {
-//     $(window).trigger('resize');
-// }, 1000);
